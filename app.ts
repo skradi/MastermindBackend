@@ -12,7 +12,7 @@ app.use(json());
 
 
 app.get('/', async (req,res)=>{
-    res.send('hi');
+    res.send('hi small change');
 })
 
 app.listen(3001, '0.0.0.0', ()=>{
