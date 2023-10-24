@@ -4,7 +4,7 @@ export const pool = createPool({
     host: 'localhost',
     user: 'root',
     database: 'megak_photo_game',
-    // password: '',
+    password: '',
     namedPlaceholders: true,
     decimalNumbers: true,
 });

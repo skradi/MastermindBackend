@@ -1,6 +1,8 @@
 import express, {json} from 'express';
 import cors from 'cors';
+import 'express-async-errors';
 import {UserRecord} from "./records/user.record";
+import {handleError} from "./utils/errors";
 
 
 const app = express();
@@ -12,7 +14,11 @@ app.use(cors({
 app.use(json());
 
 app.get('/', async (req,res)=>{
-    res.json('gf');
+    res.json('hello');
+})
+
+app.get('/test', async (req,res)=>{
+    res.json('test');
 })
 
 app.get('/id', async (req,res)=> {
@@ -24,6 +30,7 @@ app.get('/id', async (req,res)=> {
     res.json(user);
 })
 
+app.use(handleError);
 
 app.listen(3001, '0.0.0.0', ()=>{
     console.log("listening on port http://localhost:3001");
