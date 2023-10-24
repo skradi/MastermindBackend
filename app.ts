@@ -17,7 +17,7 @@ app.get('/', async (req,res)=>{
 
 app.get('/id', async (req,res)=> {
 
-    const user = await UserRecord.getOne("4");
+    const user = await UserRecord.getOne("1");
 
     console.log(user);
 
