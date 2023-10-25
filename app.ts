@@ -3,6 +3,8 @@ import cors from 'cors';
 import 'express-async-errors';
 import {UserRecord} from "./records/user.record";
 import {handleError} from "./utils/errors";
+import {homeRouter} from "./routers/home.router";
+import {registrationRouter} from "./routers/registration.router";
 
 
 const app = express();
@@ -13,9 +15,7 @@ app.use(cors({
 
 app.use(json());
 
-app.get('/', async (req,res)=>{
-    res.json('hello');
-})
+app.use('/', homeRouter)
 
 app.get('/test', async (req,res)=>{
     res.json('test');
@@ -29,6 +29,18 @@ app.get('/id', async (req,res)=> {
 
     res.json(user);
 })
+
+app.get('/user', async (req,res)=>{
+    const testobj = {
+        username: 'kok',
+        password: '1234'
+    }
+    const user = new UserRecord(testobj);
+
+    res.json(user);
+})
+
+app.post('/registration', registrationRouter);
 
 app.use(handleError);
 
