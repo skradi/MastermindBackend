@@ -1,21 +1,22 @@
-import {UserEntity} from "../types/user-entity";
+import {UserEntity, UserEntityDB} from "../types/user-entity";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 import {ValidationError} from "../utils/errors";
 import {v4 as uuid} from 'uuid';
 import bcrypt from 'bcrypt';
+
 const salt = 10;
 
-
-interface NewUserEntity extends Omit<UserEntity,'id'> {
+interface NewUserEntity extends Omit<UserEntity, 'id'> {
     id?: string;
 }
 
-type UserRecordResults = [UserEntity[], FieldPacket[]];
+export type UserRecordResults = [UserEntity[], FieldPacket[]];
 
 export class UserRecord implements UserEntity {
     public id: string;
     public username: string;
+    public email: string;
     public password: string;
 
     constructor(obj: NewUserEntity) {
@@ -28,15 +29,41 @@ export class UserRecord implements UserEntity {
 
         this.id = obj.id;
         this.username = obj.username;
+        this.email = obj.email;
         this.password = obj.password;
+
     }
 
-    static async getOne (id: string): Promise<UserRecord | null> {
-        const [results] = await pool.execute("SELECT * FROM `users` WHERE id = :id", {
-            id,
+    static async checkIfExists(username: string): Promise<any | null> {
+        const [results] = await pool.execute("SELECT * FROM `users` WHERE username = :username", {
+            username,
         }) as UserRecordResults;
 
-        return results.length === 0 ? null : new UserRecord(results[0])
+        // console.log(results[0], 'result[0]');
+
+        return !(results[0] === undefined);
+    }
+
+    static async checkIfJWTExists(jwt: string): Promise<any | null> {
+        const [results] = await pool.execute("SELECT * FROM `users` WHERE tokenid = :jwt", {
+            jwt,
+        }) as UserRecordResults;
+
+        console.log(results[0], 'result[0]');
+
+        return !(results[0] === undefined);
+    }
+
+    static async getOne(username: string): Promise<any | null> {
+        const [results] = await pool.execute("SELECT * FROM `users` WHERE username = :username", {
+            username,
+        }) as UserRecordResults;
+
+        if (results[0] === undefined) {
+            throw new ValidationError('incorrect username');
+        }
+
+        return results.length === 0 ? null : results[0];
     }
 
     async insert(): Promise<void> {
@@ -46,25 +73,16 @@ export class UserRecord implements UserEntity {
             throw new Error('Cannot insert something that is already inserted');
         }
 
-        // console.log(this.password, 'password before converting')
+        this.password = await bcrypt.hash(this.password, 10);
 
-        // hashing password by bycript
-        this.password = await new Promise((resolve, reject) => {
-            bcrypt.hash(this.password, salt, (err, hash) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(hash);
-                }
-            });
+        await pool.execute("INSERT INTO `users`(`id`,`username`,`email`, `hashpassword`) VALUES(:id, :username, :email, :password)", this)
+    }
+
+    static async update(newtoken: string, username: string): Promise<void> {
+
+        await pool.execute("UPDATE `users` SET tokenid = :newtoken WHERE username = :username", {
+            newtoken,
+            username,
         });
-
-        // throw new Error('omg what happend');
-
-        // console.log(this.password, 'password after convert');
-        // console.log(this.id, 'id');
-        // console.log(this);
-
-        await pool.execute("INSERT INTO `users`(`id`,`username`,`hashpassword`) VALUES(:id, :username, :password)", this)
     }
 }

@@ -5,5 +5,6 @@ export const homeRouter = express.Router();
 
 homeRouter
     .get('/', async (req, res) => {
-    res.json('hello5');
-})
+        console.log(req.cookies);
+        res.json('hello5');
+    })

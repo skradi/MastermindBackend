@@ -5,42 +5,56 @@ import {UserRecord} from "./records/user.record";
 import {handleError} from "./utils/errors";
 import {homeRouter} from "./routers/home.router";
 import {registrationRouter} from "./routers/registration.router";
+import {loginRouter} from "./routers/login.router";
+import cookieParser from "cookie-parser";
+import {logoutRouter} from "./routers/logout.router";
 
 
 const app = express();
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-}));
+app.use(cookieParser());
 
 app.use(json());
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
+
 
 app.use('/', homeRouter)
 
 app.get('/test', async (req,res)=>{
+
+    console.log(req.cookies, 'test endpoint');
+
     res.json('test');
 })
 
-app.get('/id', async (req,res)=> {
-
-    const user = await UserRecord.getOne("1");
-
-    console.log(user);
-
-    res.json(user);
+app.get('/cookie', async (req, res)=>{
+    console.log(req.cookies, 'cookie endpoint');
+    res.cookie('ok','fgre').json('ko');
 })
+
 
 app.get('/user', async (req,res)=>{
     const testobj = {
         username: 'kok',
-        password: '1234'
+        password: '1234',
+        email: 'cos@cos.com'
     }
     const user = new UserRecord(testobj);
 
+    console.log(user);
+
     res.json(user);
-})
+});
+
+app.get('/logout', logoutRouter);
 
 app.post('/registration', registrationRouter);
+
+app.post('/login', loginRouter);
 
 app.use(handleError);
 
