@@ -16,7 +16,13 @@ logoutRouter
         console.log(jwtCookie);
 
         //checking if cookie exists in database if yes then remove it from data base and res.cookie 'jwt_token','' to empty string
-        const jwtExistInDataBase = await UserRecord.checkIfJWTExists(jwtCookie);
+
+        const data = await UserRecord.checkIfJWTExists(jwtCookie);
+
+
+        const jwtExistInDataBase = data !== undefined;
+
+        console.log(jwtExistInDataBase);
 
         console.log(jwtExistInDataBase, 'result from db jwt existing');
 
@@ -26,6 +32,4 @@ logoutRouter
         } else {
             throw new ValidationError('there is some issue with tokens ;/');
         }
-
-
     })

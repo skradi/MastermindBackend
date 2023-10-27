@@ -1,4 +1,4 @@
-import {UserEntity, UserEntityDB} from "../types/user-entity";
+import {UserEntity} from "../types/user-entity";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 import {ValidationError} from "../utils/errors";
@@ -49,9 +49,12 @@ export class UserRecord implements UserEntity {
             jwt,
         }) as UserRecordResults;
 
-        console.log(results[0], 'result[0]');
+        // console.log(results[0], 'result[0]');
+        // console.log(results[0], 'results in user record ')
+        // console.log(results[0] === undefined, 'sprawdzenie czy to false czy true');
+        // return !(results[0] === undefined);
 
-        return !(results[0] === undefined);
+        return results[0];
     }
 
     static async getOne(username: string): Promise<any | null> {
@@ -85,4 +88,14 @@ export class UserRecord implements UserEntity {
             username,
         });
     }
+
+    static async startNewGame(username: string, game: string) {
+
+        console.log('this point crossed')
+
+        await pool.execute("UPDATE `users` SET game = :game WHERE username = :username", {
+            game,
+            username,
+        });
+    };
 }

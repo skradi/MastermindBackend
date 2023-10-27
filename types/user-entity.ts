@@ -5,10 +5,10 @@ export interface UserEntity {
     password: string,
 }
 
-export interface UserEntityDB {
-    id: string,
-    username: string,
-    email: string,
-    hashpassword: string,
-    tokenid: string,
-}
+// export interface UserEntityDB {
+//     id: string,
+//     username: string,
+//     email: string,
+//     hashpassword: string,
+//     tokenid: string,
+// }
