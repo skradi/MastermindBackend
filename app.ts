@@ -9,6 +9,7 @@ import {loginRouter} from "./routers/login.router";
 import cookieParser from "cookie-parser";
 import {logoutRouter} from "./routers/logout.router";
 import {gameRouter} from "./routers/game.router";
+import {checkRouter} from "./routers/check.router";
 
 
 const app = express();
@@ -52,6 +53,8 @@ app.get('/user', async (req,res)=>{
 });
 
 app.get('/game', gameRouter);
+
+app.post('/check', checkRouter);
 
 app.get('/logout', logoutRouter);
 

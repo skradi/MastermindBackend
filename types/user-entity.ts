@@ -12,3 +12,5 @@ export interface UserEntity {
 //     hashpassword: string,
 //     tokenid: string,
 // }
+
+export type StringArray = string[];
