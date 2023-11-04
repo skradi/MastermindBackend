@@ -61,7 +61,6 @@ checkRouter
             }
 
             return  compareStrings(userGuessString, loggedUser.game);
-
         }
 
         const hits = checkResults();
