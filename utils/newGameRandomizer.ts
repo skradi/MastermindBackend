@@ -11,8 +11,6 @@ export const newGameRandomizer = () => {
         numbersToDrawFrom.splice(index,1);
     }
 
-    numbersToDrawFrom = [1,2,3,4,5,6,7,8];
-
     return numbersForGame;
 }
 

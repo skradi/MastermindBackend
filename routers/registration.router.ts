@@ -7,9 +7,6 @@ export const registrationRouter = express.Router();
 registrationRouter
     .post('/registration', async (req, res) => {
 
-            console.log(req.body, 'req body');
-            console.log(req.cookies, 'registration endpoint');
-
         try {
             if (Object.keys(req.body).length !== 3) {
                 res.status(400).json({error: 'Something went wrong, please try again'} );
@@ -21,7 +18,6 @@ registrationRouter
                 email: req.body.email
             }
 
-
             const usernameExists = await UserRecord.checkIfExists(req.body.username);
 
             if (usernameExists) {
@@ -29,8 +25,6 @@ registrationRouter
             }
 
             const user = new UserRecord(testobj)
-
-            console.log(user, 'userrrrr');
 
             await user.insert();
 

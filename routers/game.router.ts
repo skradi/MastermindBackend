@@ -9,15 +9,12 @@ export const gameRouter = express.Router();
 gameRouter
     .get('/game', async (req, res) => {
 
-        console.log('jwt_token', req.cookies.jwt_token);
-
         if (req.cookies.jwt_token === '') {
-            res.json('you are not login');
+            res.json('you are not logged in');
             return;
         }
 
         const logged = await UserRecord.checkIfJWTExists(req.cookies.jwt_token);
-        console.log(logged, 'user from database');
 
         const numbersForGame = newGameRandomizer();
 

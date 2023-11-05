@@ -10,9 +10,6 @@ export const loginRouter = express.Router();
 loginRouter
     .post('/login', async (req,res)=>{
 
-        console.log(req.body, 'req body');
-        console.log(req.cookies, 'req cookies from login endpoint ');
-
         try {
             if (Object.keys(req.body).length !== 2) {
                 res.status(400).json({error: 'Something went wrong, please try again'} );
@@ -22,9 +19,6 @@ loginRouter
 
             const isMatch = await bcrypt.compare(req.body.password, data.hashpassword);
 
-            console.log(isMatch, 'is match');
-            console.log(data, 'this is user who is trying to login (from database)')
-
             if (!isMatch) {
                 throw new ValidationError('invalid password');
             }
@@ -32,14 +26,13 @@ loginRouter
             // let's make json web token for this user
             const nameOfUser = data.username;
             const token = jwt.sign({nameOfUser}, 'jwt-secret-key',{expiresIn: '1d'});
-            console.log(token, 'token for user')
 
-            // res.cookie('token', token ).json('gdzie to ciastko');
+            // res.cookie('token', token ).json('gdzie to ciastko?');
             data.token = token;
 
             await UserRecord.update(token, data.username);
 
-            res.cookie('jwt_token', token).json({'token': token});
+            res.cookie('jwt_token', token).json({'username': data.username});
 
         } catch (error) {
             if (error instanceof ValidationError) {

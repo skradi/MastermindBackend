@@ -19,13 +19,13 @@ checkRouter
         // checking game guess function
         const checkResults = () => {
             const colorMap = {
-                'grey': 1,
+                'brown': 1,
                 'green': 2,
                 'red': 3,
                 'blue': 4,
                 'orange': 5,
                 'purple': 6,
-                'pink': 7,
+                'dgreen': 7,
                 'yellow': 8
             };
 
@@ -64,7 +64,6 @@ checkRouter
         }
 
         const hits = checkResults();
-        console.log(hits);
 
         res.json(hits);
     });

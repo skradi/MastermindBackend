@@ -5,13 +5,13 @@ export const isReqBodyCorrect = (array: StringArray) => {
     if (array.length !== 5) {
         throw new ValidationError('Something went wrong..');
     }
-    const uniqueColros = new Set(array);
+    const uniqueColors = new Set(array);
 
-    if (uniqueColros.size !== 5) {
+    if (uniqueColors.size !== 5) {
         throw new ValidationError('Something went wrong');
     }
 
-    const allowedColors = ['grey', 'green', 'red', 'blue', 'orange', 'purple', 'pink', 'yellow'];
+    const allowedColors = ['brown', 'green', 'red', 'blue', 'orange', 'purple', 'dgreen', 'yellow'];
 
     for (const color of array) {
         if (!allowedColors.includes(color)) {
