@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import {logoutRouter} from "./routers/logout.router";
 import {gameRouter} from "./routers/game.router";
 import {checkRouter} from "./routers/check.router";
+import {config} from "./config/config";
+import rateLimit from "express-rate-limit";
 
 const app = express();
 
@@ -16,9 +18,14 @@ app.use(cookieParser());
 app.use(json());
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: config.corsOrigin,
     credentials: true,
 }));
+
+app.use(rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    limit: 100, // Limit each IP to 100 requests per 'window' (here, per 15 minutes)
+}))
 
 app.get('/test', async (req,res)=>{
     res.json('test');

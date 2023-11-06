@@ -3,7 +3,8 @@ import {UserRecord} from "../records/user.record";
 import {ValidationError} from "../utils/errors";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-const salt = 10;
+import {config} from "../config/config";
+// const salt = 10;
 
 export const loginRouter = express.Router();
 
@@ -25,7 +26,7 @@ loginRouter
 
             // let's make json web token for this user
             const nameOfUser = data.username;
-            const token = jwt.sign({nameOfUser}, 'jwt-secret-key',{expiresIn: '1d'});
+            const token = jwt.sign({nameOfUser}, config.jwt,{expiresIn: '1d'});
 
             // res.cookie('token', token ).json('gdzie to ciastko?');
             data.token = token;

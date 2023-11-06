@@ -1,9 +1,10 @@
 import * as crypto from 'crypto';
+import {config} from "../config/config";
 
 export const hashPwd = (p: string): string => {
     const hmac = crypto.createHmac(
         'sha512',
-        'OIUAEHOHDSF)*@#$FjHDfkiHF(#$W@fuh0h88FhgdS)fSHUDF90 HFDS9SUDF ihDF0U*HSDF ',
+        config.hashsalt,
     );
     hmac.update(p);
     return hmac.digest('hex');
