@@ -1,4 +1,4 @@
-# Mastermind - logic game (backend)
+# Mastermind - logic game (backend Express)
 
 
 ![mastermindb](https://github.com/skradi/MastermindBackend/assets/144287736/96449f7e-dc5b-4314-ba92-7bf81c58878e)
@@ -21,7 +21,7 @@ game varchar 20 Allow NULL;
 
 ### Links
 
-Link to the Mastermind page: [mastermind page](https://mastermind.elosito.usermd.net).
+Link to the Mastermind page: [mastermind page](https://mastermind.elosito.usermd.net).<br>
 Link to gitHub mastermind frontend: https://github.com/skradi/MastermindFrontend
 
 ### Roadmap 
