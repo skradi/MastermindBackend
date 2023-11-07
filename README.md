@@ -11,14 +11,14 @@ The project is using an SQL database, so if you want to run this project locally
 id varchar 36 uuid;
 username varchar 20;
 hashpassword varchar 70;
-tokenid varchar 200; 
+tokenid varchar 200 Allow NULL; 
 email varchar 50; 
-game varchar 20; 
+game varchar 20 Allow NULL; 
 
 ### Links
 
 Link to the Mastermind page: [mastermind page](https://mastermind.elosito.usermd.net).
-Link to gitHub mastermind frontend: [mastermind frontend](https://github.com/skradi/MastermindFrontend).
+Link to gitHub mastermind frontend: https://github.com/skradi/MastermindFrontend
 
 ### Roadmap 
 For now, you can only play solo games, but in the future, I plan to add some features: 
