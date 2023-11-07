@@ -1,8 +1,12 @@
 # Mastermind - logic game (backend)
 
+
 ![mastermindb](https://github.com/skradi/MastermindBackend/assets/144287736/96449f7e-dc5b-4314-ba92-7bf81c58878e)
 
-#### Available Scripts
+### Technologies
+Express, TypeScript
+
+### Available Scripts
 In the project directory, you can run locally:
 `npm i`
 `npm run start:dev`
